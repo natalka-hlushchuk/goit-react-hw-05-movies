@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 import { Overlay, ModalStyled } from './Modal.styled';
 
 export class Modal extends Component {
@@ -32,3 +32,7 @@ export class Modal extends Component {
     );
   }
 }
+Modal.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  largePhotoURL: PropTypes.string.isRequired,
+};
