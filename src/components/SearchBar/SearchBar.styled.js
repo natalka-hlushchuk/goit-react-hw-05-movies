@@ -33,26 +33,16 @@ export const ButtonSearchForm = styled.button`
   width: 48px;
   height: 48px;
   border: 0;
-  /* background-image: url('../img/free-icon-magnifier-2866321.png');
   background-size: contain;
   background-size: 40%;
   background-repeat: no-repeat;
-  background-position: center; */
+  background-position: center;
   opacity: 0.6;
   transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   outline: none;
   :hover {
     opacity: 1;
-  }
-  ::before {
-    content: ' ';
-    display: block;
-    background-image: url('./img/free-icon-magnifier-2866321.png');
-    width: 25px;
-    height: 25px;
-    background-repeat: no-repeat;
-    background-size: contain;
   }
 `;
 
