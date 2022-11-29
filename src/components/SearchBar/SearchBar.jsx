@@ -21,7 +21,6 @@ export class SearchBar extends Component {
     evt.preventDefault();
     if (this.state.photoName.trim() === '') {
       Notiflix.Notify.warning('Введіть фото');
-      // toast('введи фото');
       return;
     }
     this.props.onSubmit(this.state.photoName);
