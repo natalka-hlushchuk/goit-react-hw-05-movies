@@ -1,37 +1,37 @@
-import React, { Component } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Overlay, ModalStyled } from './Modal.styled';
 
-export class Modal extends Component {
-  componentDidMount() {
-    window.addEventListener('keydown', this.handelKeyDown);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handelKeyDown);
-  }
-
-  handelKeyDown = event => {
-    if (event.code === 'Escape') {
-      this.props.closeModal();
-    }
-  };
-  handelBackDropClick = event => {
+export const Modal = ({ closeModal, largePhotoURL }) => {
+  const handelKeyDown = useCallback(
+    event => {
+      if (event.code === 'Escape') {
+        closeModal();
+      }
+    },
+    [closeModal]
+  );
+  const handelBackDropClick = event => {
     if (event.currentTarget === event.target) {
-      this.props.closeModal();
+      closeModal();
     }
   };
+  useEffect(() => {
+    window.addEventListener('keydown', handelKeyDown);
 
-  render() {
-    return (
-      <Overlay onClick={this.handelBackDropClick}>
-        <ModalStyled>
-          <img src={this.props.largePhotoURL} alt="" />
-        </ModalStyled>
-      </Overlay>
-    );
-  }
-}
+    return () => {
+      window.removeEventListener('keydown', handelKeyDown);
+    };
+  }, [handelKeyDown]);
+  return (
+    <Overlay onClick={handelBackDropClick}>
+      <ModalStyled>
+        <img src={largePhotoURL} alt="" />
+      </ModalStyled>
+    </Overlay>
+  );
+};
+
 Modal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   largePhotoURL: PropTypes.string.isRequired,

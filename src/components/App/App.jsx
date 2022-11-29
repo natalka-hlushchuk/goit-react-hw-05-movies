@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { searchPhoto } from 'service/api';
 import Notiflix from 'notiflix';
 import { SearchBar } from 'components/SearchBar/SearchBar';
@@ -8,74 +8,62 @@ import { Modal } from 'components/Modal/Modal';
 import { Loader } from 'components/Loader/loader';
 import { AppStyled } from './App.styled';
 
-class App extends Component {
-  state = {
-    photoName: '',
-    photos: [],
-    loading: false,
-    page: 1,
-    largePhoto: '',
+const App = () => {
+  const [photoName, setPhotoName] = useState('');
+  const [photos, setPhotos] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [largePhoto, setLargePhoto] = useState('');
+
+  useEffect(() => {
+    if (photoName === '') return;
+    setLoading(true);
+    searchPhoto(photoName, page)
+      .then(photos => {
+        if (photos.hits.length === 0) {
+          Notiflix.Notify.info(
+            'Sorry, there are no images matching your search query. Please try again.'
+          );
+        }
+        setPhotos(prevState => {
+          return [...prevState, ...photos.hits];
+        });
+      })
+      .catch(err => new Error(Notiflix.Notify.failure(`Request error`)))
+      .finally(() => setLoading(false));
+  }, [photoName, page]);
+
+  const handelFormSubmit = photoName => {
+    setPhotoName(photoName);
+    setPage(1);
+    setPhotos([]);
   };
 
-  componentDidUpdate(_, prevState) {
-    const { page, photoName } = this.state;
-    if (prevState.page !== page || prevState.photoName !== photoName) {
-      this.setState({ loading: true });
-      searchPhoto(photoName, page)
-        .then(photos => {
-          if (photos.hits.length === 0) {
-            Notiflix.Notify.info(
-              'Sorry, there are no images matching your search query. Please try again.'
-            );
-          }
-          this.setState(prevState => ({
-            photos: [...prevState.photos, ...photos.hits],
-          }));
-        })
-        .catch(err => new Error(Notiflix.Notify.failure(`Request error`)))
-        .finally(() => this.setState({ loading: false }));
-    }
-    return;
-  }
-
-  handelFormSubmit = photoName => {
-    this.setState({ photoName, page: 1 });
-  };
-  onClickModal = url => {
-    this.setState({ largePhoto: url });
-  };
-  onCloseModal = () => {
-    this.setState({
-      largePhoto: '',
-    });
-  };
-  onLoadMore = () => {
-    this.setState({ page: this.state.page + 1 });
+  const onClickModal = url => {
+    setLargePhoto(url);
   };
 
-  render() {
-    return (
-      <AppStyled>
-        <SearchBar onSubmit={this.handelFormSubmit}></SearchBar>
-        {this.state.loading && <Loader />}
-        {this.state.photos.length > 0 && (
-          <ImageGallery
-            photos={this.state.photos}
-            onClick={this.onClickModal}
-          ></ImageGallery>
-        )}
-        {this.state.largePhoto && (
-          <Modal
-            largePhotoURL={this.state.largePhoto}
-            closeModal={this.onCloseModal}
-          />
-        )}
-        {this.state.photos.length > 0 && (
-          <Button onClick={this.onLoadMore} loading={this.state.loading} />
-        )}
-      </AppStyled>
-    );
-  }
-}
+  const onCloseModal = () => {
+    setLargePhoto('');
+  };
+
+  const onLoadMore = () => {
+    setPage(prevState => prevState + 1);
+  };
+
+  return (
+    <AppStyled>
+      <SearchBar onSubmit={handelFormSubmit}></SearchBar>
+      {loading && <Loader />}
+      {photos.length > 0 && (
+        <ImageGallery photos={photos} onClick={onClickModal}></ImageGallery>
+      )}
+      {largePhoto && (
+        <Modal largePhotoURL={largePhoto} closeModal={onCloseModal} />
+      )}
+      {photos.length > 0 && <Button onClick={onLoadMore} loading={loading} />}
+    </AppStyled>
+  );
+};
 
 export default App;
