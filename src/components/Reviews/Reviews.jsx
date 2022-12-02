@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Notiflix from 'notiflix';
 import { getReviews } from 'service/api';
 import { Loader } from '../index';
@@ -9,6 +9,7 @@ import {
   ReviewsAuthor,
   NoReviews,
 } from 'components/Reviews/Reviews.styled';
+
 const Reviews = () => {
   const { id } = useParams();
   const [reviews, setReviews] = useState({});
@@ -19,7 +20,6 @@ const Reviews = () => {
     async function findReviews() {
       try {
         const { data } = await getReviews(id);
-        console.log(data);
         setReviews(data);
       } catch (error) {
         new Error(Notiflix.Notify.failure(`Request error`));
@@ -29,7 +29,7 @@ const Reviews = () => {
     }
     findReviews();
   }, [id]);
-  console.log(reviews);
+
   return (
     <ReviewsStyled>
       {loading && <Loader />}

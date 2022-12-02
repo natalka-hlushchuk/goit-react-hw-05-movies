@@ -12,7 +12,7 @@ export const MovieDetailsStyled = styled.div`
 `;
 export const ButtonGoBack = styled(Link)`
   display: flex;
-  min-width: 100px;
+  width: 100px;
   margin-bottom: 20px;
   padding: 4px;
   align-items: center;

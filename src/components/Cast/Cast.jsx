@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Notiflix from 'notiflix';
 import { getCast } from 'service/api';
 import { Loader, CastItem } from '../index';
@@ -8,8 +8,6 @@ const Cast = () => {
   const { id } = useParams();
   const [castMenu, setCastMenu] = useState({});
   const [loading, setLoading] = useState(false);
-  const location = useLocation();
-  console.log('🚀 ~ file: Cast.jsx:12 ~ Cast ~ location', location);
 
   useEffect(() => {
     setLoading(true);

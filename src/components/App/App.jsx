@@ -1,8 +1,5 @@
-import React from 'react';
-import { lazy } from 'react';
+import React, { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
-// import { Home, Movies, MovieDetails } from '../../pages/index';
-// import { Cast, Reviews } from '../index';
 import { Layout } from '../../components/index';
 import NotFound from '../NotFound/NotFound';
 

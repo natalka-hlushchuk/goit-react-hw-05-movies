@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   MoviesListStyled,
   MoviesItem,
@@ -7,7 +8,6 @@ import { useLocation } from 'react-router-dom';
 
 export const MoviesList = ({ movies }) => {
   const location = useLocation();
-  console.log(11111111, location);
   return (
     <MoviesListStyled>
       {movies.map(({ title, id }) => {
@@ -24,3 +24,10 @@ export const MoviesList = ({ movies }) => {
     </MoviesListStyled>
   );
 };
+
+MoviesList.PropTypes.arrayOf(
+  PropTypes.exact({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  })
+);

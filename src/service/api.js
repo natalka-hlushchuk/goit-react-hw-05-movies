@@ -29,7 +29,6 @@ export async function getCast(id) {
     const response = await axios.get(
       `movie/${id}/credits?api_key=${KEY}&language=en-US`
     );
-    console.log(response);
     return response;
   } catch (error) {
     throw new Error(error);
@@ -42,7 +41,6 @@ export async function getReviews(id) {
     const response = await axios.get(
       `movie/${id}/reviews?api_key=${KEY}&language=en-US`
     );
-    console.log(response);
     return response;
   } catch (error) {
     throw new Error(error);
@@ -52,13 +50,10 @@ export async function getReviews(id) {
 export async function getMovies(movie) {
   try {
     const response = await axios.get(
-      `/search/movie?api_key=${KEY}&language=en-US&page=1&include_adult=false&limit=20&query=${movie}
-`
+      `/search/movie?api_key=${KEY}&language=en-US&page=1&include_adult=false&limit=20&query=${movie}`
     );
-    console.log(response);
     return response;
   } catch (error) {
     throw new Error(error);
   }
 }
-getMovies('lion');

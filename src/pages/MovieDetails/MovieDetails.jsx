@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react';
-import { useParams, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, Outlet, useLocation } from 'react-router-dom';
 import { getMovieDetails } from 'service/api';
 import {
   MovieDetailsStyled,
@@ -22,7 +22,6 @@ const MovieDetails = () => {
   const location = useLocation();
   const goBackLink =
     `${location?.state?.from}${location?.state?.search}` ?? '/';
-  console.log(222222222, location);
 
   useEffect(() => {
     async function findMovieDetails() {
