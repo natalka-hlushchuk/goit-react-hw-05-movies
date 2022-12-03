@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   CastItemStyled,
   CastPhotoStyled,
@@ -7,6 +6,7 @@ import {
   CastListStyled,
   CharacterStyled,
 } from 'components/CastItem/CastItem.styled';
+
 export const CastItem = ({ cast }) => {
   return (
     <CastListStyled>
@@ -30,12 +30,3 @@ export const CastItem = ({ cast }) => {
     </CastListStyled>
   );
 };
-
-CastItem.PropTypes.arrayOf(
-  PropTypes.exact({
-    id: PropTypes.string.isRequired,
-    profile_path: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    character: PropTypes.string.isRequired,
-  })
-);

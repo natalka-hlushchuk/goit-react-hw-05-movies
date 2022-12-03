@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   MoviesListStyled,
   MoviesItem,
@@ -24,10 +23,3 @@ export const MoviesList = ({ movies }) => {
     </MoviesListStyled>
   );
 };
-
-MoviesList.PropTypes.arrayOf(
-  PropTypes.exact({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-  })
-);

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import icon from '../../img/oopss.jpg';
-console.log(icon);
 export const NotFoundStyled = styled.div`
   width: 100vw;
   height: 100vh;
